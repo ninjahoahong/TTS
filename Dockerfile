@@ -7,12 +7,17 @@ RUN apt-get update && \
 	add-apt-repository ppa:deadsnakes/ppa && \
 	apt-get update && \
 	apt-get install -y python3.6 python3.6-dev python3.6-tk && \
+	apt-get install -y espeak && \
 	# Install pip manually
 	wget https://bootstrap.pypa.io/get-pip.py && \
 	python3.6 get-pip.py && \
 	rm get-pip.py && \
 	# Used by the server in server/synthesizer.py
 	pip install soundfile
+
+ADD ./requirements.txt /srv/app/requirements.txt
+
+RUN pip install -r /srv/app/requirements.txt
 
 ADD . /srv/app
 
